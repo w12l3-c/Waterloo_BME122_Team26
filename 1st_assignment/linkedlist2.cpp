@@ -8,50 +8,51 @@ struct Node{
 };
 
 class LinkedList{
-    private:
-        LinkedList* next;   // the linkedlist component pointer
-        int data; // the data stored in each node of linkedlist
-
     public:
         // contructors and destructors
         LinkedList();
         LinkedList(int num1);
         LinkedList(int num1, int num2);
         ~LinkedList();
+
+        Node* head;
         
         void print(); // print all the data of every node in the linkedlist
-        void append(int num, LinkedList* curr); // append a new node to the end of the linkedlist
+        void append(int num, Node* curr); // append a new node to the end of the linkedlist
 };
 
 LinkedList::LinkedList(){
     // default head linked list with data = 0
-    next = NULL;
-    data = 0;
+    head = new Node();
+    head->next = NULL;
+    head->data = 0;
 }
 
 LinkedList::LinkedList(int num1){
     // inistalize a node in linked list with num1
-    next = NULL;
-    data = num1;
+    head = new Node();
+    head->next = NULL;
+    head->data = num1;
 }
 
 LinkedList::LinkedList(int num1, int num2){
     // create a second node with the num2
-    LinkedList* curr = new LinkedList();
+    Node* curr = new Node();
     curr->data = num2;
     curr->next = NULL;
     // create the first node and point next to the second node
-    next = curr;
-    data = num1;
+    head = new Node();
+    head->next = curr;
+    head->data = num1;
 }
 
 LinkedList::~LinkedList(){
     // create a linked list that points to the original linked list
-    LinkedList* curr = this;
+    Node* curr = this->head;
     // loop through the linked list
     while (curr->next != NULL){
         // create a dummy linkedlist to hold current node
-        LinkedList* temp = curr;
+        Node* temp = curr;
         // the current linkedlist advance to next node
         curr = curr->next;
         // delete the dummy node
@@ -65,11 +66,11 @@ LinkedList::~LinkedList(){
 
 void LinkedList::print(){
     // create a linked list that points to the original linked list
-    LinkedList* curr = this;
+    Node* curr = this->head;
     // loop through the linked list
     while (curr->next != NULL){
         // print the data within the node of the linkedlist
-        cout << curr->data << endl;
+        cout << curr->data << ' ';
         // advance the linkedlist into the next node
         curr = curr->next;
     }
@@ -77,20 +78,23 @@ void LinkedList::print(){
     cout << curr->data << endl;
 }
 
-void LinkedList::append(int add, LinkedList* curr){
+void LinkedList::append(int add, Node* curr){
     // if the linkedlist is emtpy return void
     if (curr == NULL){
         return;
     }
     // if the linkedlist next pointer doesn't point to NULL (next is pointing to another node)
     if (curr->next != NULL){
+        
         // return the function as a recursive approach
         return append(add, curr->next);
     }
     // until it reaches the end of the linked list
     else{
         // create a node
-        LinkedList* temp = new LinkedList(add);
+        Node* temp = new Node();
+        temp->data = add;
+        temp->next = NULL;
         // point the next of the current node (last one) to the new node with add as data value
         curr->next = temp;
         return;
@@ -99,14 +103,16 @@ void LinkedList::append(int add, LinkedList* curr){
 
 int main(int argc, char** argv){
     // create a linked list
-    LinkedList* link = new LinkedList();
+    
+    LinkedList link = LinkedList();
+    
     // iteratively add 10 values to the end of linked list
     for (int i = 1; i <= 10; i++){
-        link->append(i, link);
+        link.append(i, link.head);
     }
     // append another value to the end of the linked list
-    link->append(15, link);
+    link.append(15, link.head);
     // print out all the data values in each node of the linked list
-    link->print();
+    link.print();
     return 0;
 }
