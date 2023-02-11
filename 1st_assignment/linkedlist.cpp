@@ -1,112 +1,138 @@
 #include <iostream>
-
+#include "LinkedList.h"
 using namespace std;
 
-struct Node{
-    int data;
-    Node* next;
-};
-
-class LinkedList{
-    private:
-        LinkedList* next;   // the linkedlist component pointer
-        int data; // the data stored in each node of linkedlist
-
-    public:
-        // contructors and destructors
-        LinkedList();
-        LinkedList(int num1);
-        LinkedList(int num1, int num2);
-        ~LinkedList();
-        
-        void print(); // print all the data of every node in the linkedlist
-        void append(int num, LinkedList* curr); // append a new node to the end of the linkedlist
-};
-
-LinkedList::LinkedList(){
-    // default head linked list with data = 0
-    next = NULL;
-    data = 0;
+/**
+ * Default constructor
+ */
+LinkedList::LinkedList() {
+    //Default list will have no elements
+    head = NULL;
 }
 
-LinkedList::LinkedList(int num1){
-    // inistalize a node in linked list with num1
-    next = NULL;
-    data = num1;
+
+/**
+ * A constructor that accepts a number for the initial head
+ * @param num : Initial value of the linked list head
+ */
+LinkedList::LinkedList(int num) {
+    //Initialize the first node with value of num
+    head = new Node();
+    head->data = num;
+    head->next = NULL;
 }
 
-LinkedList::LinkedList(int num1, int num2){
-    // create a second node with the num2
-    LinkedList* curr = new LinkedList();
-    curr->data = num2;
-    curr->next = NULL;
-    // create the first node and point next to the second node
-    next = curr;
-    data = num1;
+
+/**
+ * A destructor that deletes the linked list
+ */
+LinkedList::~LinkedList() {
+    //Clears the list
+    clear();
 }
 
-LinkedList::~LinkedList(){
-    // create a linked list that points to the original linked list
-    LinkedList* curr = this;
-    // loop through the linked list
-    while (curr->next != NULL){
-        // create a dummy linkedlist to hold current node
-        LinkedList* temp = curr;
-        // the current linkedlist advance to next node
-        curr = curr->next;
-        // delete the dummy node
-        temp = NULL;
-        delete temp;
-    }
-    // delete the linkedlist object that was used to loop through
-    curr = NULL;
-    delete curr;
-}
 
-void LinkedList::print(){
-    // create a linked list that points to the original linked list
-    LinkedList* curr = this;
-    // loop through the linked list
-    while (curr->next != NULL){
-        // print the data within the node of the linkedlist
-        cout << curr->data << endl;
-        // advance the linkedlist into the next node
-        curr = curr->next;
-    }
-    // print out the data in the last node
-    cout << curr->data << endl;
-}
+/**
+ * Prints out the elements of the linked list
+ */
+void LinkedList::print() {
 
-void LinkedList::append(int add, LinkedList* curr){
-    // if the linkedlist is emtpy return void
-    if (curr == NULL){
+    //Checks if the linked list is empty
+    if (head == NULL){
+        cout << "List is empty" << endl;
+
+        //Ends the function early
         return;
     }
-    // if the linkedlist next pointer doesn't point to NULL (next is pointing to another node)
-    if (curr->next != NULL){
-        // return the function as a recursive approach
-        return append(add, curr->next);
-    }
-    // until it reaches the end of the linked list
-    else{
-        // create a node
-        LinkedList* temp = new LinkedList(add);
-        // point the next of the current node (last one) to the new node with add as data value
-        curr->next = temp;
-        return;
+
+    /*If the list is not empty, it will iterate through each node*/
+
+    //Node pointer to act as an iterator
+    Node * it = head;
+    
+    //Loops until it reaches the tail
+    while(it != NULL) {
+
+        //Prints out the value of the node
+        cout << it->data << endl;
+
+        //Goes to the next node
+        it = it->next;
     }
 }
 
-int main(int argc, char** argv){
-    // create a linked list
-    LinkedList* link = new LinkedList();
-    // iteratively add 10 values to the end of linked list
-    for (int i = 1; i <= 10; i++){
-        link->append(i, link);
+
+/**
+ * Recursive function to get the tail of the linked list
+ * Calls this function until it reaches the tail of the node
+ * @return the node of the tail
+ */
+Node* LinkedList::getTail(Node* node) {
+
+    //Base case: If the node's next pointer is null, it is the tail and returns the node pointer
+    if(node->next == NULL){
+        return node;
     }
-    // append another value to the end of the linked list
-    link->append(15, link);
-    // print out all the data values in each node of the linked list
-    link->print();
-    return 0;
+
+    //Recursive call to next node
+    return getTail(node->next);
+}
+
+
+/**
+ * Function to insert a number to the end of the list
+ * @param num The value of the new node
+ */
+void LinkedList::insert(int num) {
+
+    //Checks if the list is empty
+    if(head == NULL){
+
+        //Initialize the list
+        head = new Node();
+        head->data = num;
+        head->next = NULL;
+
+        //Ends the function early
+        return;
+    }
+
+    /*If the list is not empty*/
+
+    //Gets the pointer to the tail
+    Node * tail = getTail(head);
+
+    //Inserts a new node to the tail
+    tail->next = new Node();
+    tail = tail->next;
+
+    //Set the new node's values
+    tail->data = num;
+    tail->next = NULL;
+}
+
+
+/**
+ * Function to clear the list
+ */
+void LinkedList::clear() {
+
+    //Place holder pointer to hold the address of previous node
+    Node * prev;
+
+    //Loops until it reaches the tail
+    while(head -> next != NULL) {
+
+        //The head will become the previous node
+        prev = head;
+
+        //The new head will be the next node
+        head = head -> next;
+
+        //Deletes the previous node
+        delete prev;
+    }
+
+    //Sets the head to null to indicate it is empty
+    head = NULL;
 }
