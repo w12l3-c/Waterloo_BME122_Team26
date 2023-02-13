@@ -151,5 +151,32 @@ int main(int argc, char** argv){
     link.append(15, link.head);
     // print out all the data values in each node of the linked list
     link.print();
+
+    // create a user input linked list
+    LinkedList user = LinkedList();
+    int num;    // number of nodes to input
+    bool again = false;     // boolean to determine if user wants to add more nodes
+
+    // run the program once first
+    do{
+        cout << "Enter a number for how many nodes to input: ";
+        cin >> num;
+
+        // loop through the number of nodes to input
+        for (int i = 0; i < num; i++){
+            int input;  // user input
+            cout << "Enter a number: ";
+            cin >> input;   // get user input
+            user.append(input, user.head);  // append the user input to the end of the linked list
+            cout << "Current list: ";
+            user.print();   // print out the current linked list
+        }
+
+        cout << "Do you want to add more nodes? (1 for yes, 0 for no): ";
+        cin >> again;   // get user input
+
+    } while (again);    // if user wants to add more nodes, run the program again
+
+    cout << "Done!";  
     return 0;
 }
