@@ -2,24 +2,44 @@
 
 using namespace std;
 
+/***************************************
+
+               Node struct
+
+***************************************/
+
+// Node struct
 struct Node{
-    int data;
-    Node* next;
+    int data;   // data value of the node
+    Node* next; // pointer to the next node
 };
+
+/***************************************
+
+            Linkedlist class
+
+***************************************/
+
 
 class LinkedList{
     public:
         // contructors and destructors
-        LinkedList();
-        LinkedList(int num1);
-        LinkedList(int num1, int num2);
-        ~LinkedList();
+        LinkedList();   // default constructor
+        LinkedList(int num1);   // constructor with one parameter
+        LinkedList(int num1, int num2); // constructor with two parameters
+        ~LinkedList();  // destructor
 
-        Node* head;
+        Node* head; // the head of the linked list
         
         void print(); // print all the data of every node in the linkedlist
         void append(int num, Node* curr); // append a new node to the end of the linkedlist
 };
+
+/***************************************
+
+    Class Constructors and Destructor
+
+***************************************/
 
 LinkedList::LinkedList(){
     // default head linked list with data = 0
@@ -64,6 +84,12 @@ LinkedList::~LinkedList(){
     delete curr;
 }
 
+/***************************************
+
+              Class Methods
+
+***************************************/
+
 void LinkedList::print(){
     // create a linked list that points to the original linked list
     Node* curr = this->head;
@@ -79,16 +105,23 @@ void LinkedList::print(){
 }
 
 void LinkedList::append(int add, Node* curr){
+    // Prevent looping the linkedlist that is empty
     // if the linkedlist is emtpy return void
+    // Base case number 2
     if (curr == NULL){
+        // Create the node for the head
+        curr = new Node();
+        curr->data = add;
+        curr->next = NULL;
         return;
     }
+    // Recursive case
     // if the linkedlist next pointer doesn't point to NULL (next is pointing to another node)
     if (curr->next != NULL){
-        
         // return the function as a recursive approach
         return append(add, curr->next);
     }
+    // Base case number 1
     // until it reaches the end of the linked list
     else{
         // create a node
@@ -101,11 +134,15 @@ void LinkedList::append(int add, Node* curr){
     }
 }
 
+/***************************************
+
+              Main Function    
+
+***************************************/
+
 int main(int argc, char** argv){
     // create a linked list
-    
     LinkedList link = LinkedList();
-    
     // iteratively add 10 values to the end of linked list
     for (int i = 1; i <= 10; i++){
         link.append(i, link.head);
