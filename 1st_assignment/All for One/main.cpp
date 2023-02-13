@@ -30,7 +30,6 @@ class LinkedList{
     public:
         //Contructors and Destructors
         LinkedList();
-        LinkedList(int num);
         ~LinkedList();
         
         void print(); //Prints the list
@@ -53,19 +52,6 @@ LinkedList::LinkedList() {
     //Default list will have no elements
     head = NULL;
 }
-
-
-/**
- * A constructor that accepts a number for the initial head
- * @param num : Initial value of the linked list head
- */
-LinkedList::LinkedList(int num) {
-    //Initialize the first node with value of num
-    head = new Node();
-    head->data = num;
-    head->next = NULL;
-}
-
 
 /**
  * A destructor that deletes the linked list
@@ -98,11 +84,12 @@ void LinkedList::print() {
     while(it != NULL) {
 
         //Prints out the value of the node
-        cout << it->data << endl;
+        cout << it->data << " ";
 
         //Goes to the next node
         it = it->next;
     }
+    cout << endl;
 }
 
 
@@ -194,44 +181,87 @@ void LinkedList::clear() {
 ////////////////////////////////
 int main() {
 
-    /*
-    Test 1
-    */
+    //Creates a new linked list
+    LinkedList list;
 
-    //Default constructor
-    LinkedList newList;
+    //Loops until user wants to leave
+    while(true){
+        
+        //Prints the options
+        cout << "Actions: " << endl;
+        cout << "1. Insert new node" << endl;
+        cout << "2. Print new node" << endl;
+        cout << "3. Clear linked list" << endl;
+        cout << "4. Exit" << endl;
+        cout << "What actions would you like? ";
 
-    //Inserts a bunch of numbers
-    newList.insert(10);
-    newList.insert(11);
-    newList.insert(69);
-    newList.insert(420);
-    newList.insert(1738);
+        //Gets user options
+        int input;
+        cin >> input;
 
-    //Prints the list
-    newList.print();
+        //Checks if the user input is invalid
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(1000,'\n');
+            cout << "\n\nInvalid Input" << endl;
+        }
 
-    //Clears the list
-    newList.clear();
+        //If the user input is good
+        else {
 
-    //Shows that the list is empty
-    newList.print();
+            /*If the user chose to insert new node*/
+            if(input == 1){
 
+                //Loops until a valid integer is entered
+                while(true){
 
-    /*
-    Test 2
-    */
+                    //Asks user for number
+                    cout << "Enter an integer: ";
+                    int newData;
+                    cin >> newData;
 
-    //Creates a new linked list with the head equal to 10
-    LinkedList newerList(10);
+                    //Checks if the input is valid
+                    if (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(1000,'\n');
+                        cout << "\nInvalid Input" << endl;
+                    }
 
-    //Inserts numbers
-    newerList.insert(100);
-    newerList.insert(1000);
+                    //If user input is valid
+                    else{
 
-    //Prints numbers
-    newerList.print();
+                        //Inserts input to list
+                        list.insert(newData);
+                        cout << "\n\n" << endl;
+                        break;
+                    }
+                }
+            }
 
+            /*If the user wants to print the list*/
+            else if (input == 2){
+                cout << "\n\nList is:" << endl;
+                list.print();
+            }
+
+            /*If the user wants to clear the list*/
+            else if (input == 3){
+                cout << endl;
+                list.clear();
+                cout << endl;
+            }
+
+            /*Ends the program*/
+            else if (input == 4){
+                break;
+            }
+
+            /*Tells user they entered a bad input*/
+            else {
+                cout << "\n\nInvalid Input" << endl;
+            }
+        }
+    }
 
     return 0;
 }
