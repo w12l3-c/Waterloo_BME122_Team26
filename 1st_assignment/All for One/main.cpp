@@ -161,6 +161,11 @@ void LinkedList::insert(int num) {
  */
 void LinkedList::clear() {
 
+    //Check if list is cleared already
+    if (head == NULL){
+        return;
+    }
+
     //Place holder pointer to hold the address of previous node
     Node * prev;
 
