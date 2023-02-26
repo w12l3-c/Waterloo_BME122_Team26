@@ -1,8 +1,15 @@
+/**
+ * BME 122 2022
+ * Assignment 1
+ * Group 26
+ * Aaron Jumarang,  Wallace Lee, John Matti, Aric Quan
+*/
+
 #include <iostream>
 using namespace std;
 
 ////////////////////////////////
-///////     NODE       /////////
+///////     STRUCT       ///////
 ////////////////////////////////
 
 //Struct for Node
@@ -116,10 +123,10 @@ Node* LinkedList::getTail(Node* node) {
  */
 void LinkedList::insert(int num) {
 
-    //Checks if the list is empty
+    //Checks if the list is empty. If so, create a head
     if(head == NULL){
 
-        //Initialize the list
+        //Initialize the head
         head = new Node();
         head->data = num;
         head->next = NULL;
@@ -130,7 +137,7 @@ void LinkedList::insert(int num) {
 
     /*If the list is not empty*/
 
-    //Gets the pointer to the tail
+    //Calls recursive function to get tail pointer
     Node * tail = getTail(head);
 
     //Inserts a new node to the tail
@@ -201,6 +208,8 @@ int main() {
 
         //Checks if the user input is invalid
         if (cin.fail()) {
+
+            //Clears inputs
             cin.clear();
             cin.ignore(1000,'\n');
             cout << "\n\nInvalid Input" << endl;
@@ -222,6 +231,8 @@ int main() {
 
                     //Checks if the input is valid
                     if (cin.fail()) {
+
+                        //Clears input
                         cin.clear();
                         cin.ignore(1000,'\n');
                         cout << "\nInvalid Input" << endl;
@@ -241,18 +252,23 @@ int main() {
             /*If the user wants to print the list*/
             else if (input == 2){
                 cout << "\n\nList is:" << endl;
+
+                //Prints list
                 list.print();
             }
 
             /*If the user wants to clear the list*/
             else if (input == 3){
-                cout << endl;
+                cout << endl << "List Cleared" << endl;
+
+                //Clears list
                 list.clear();
-                cout << endl;
             }
 
             /*Ends the program*/
             else if (input == 4){
+
+                //Exits big loop
                 break;
             }
 
