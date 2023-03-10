@@ -2,7 +2,7 @@
  * BME 122 2023
  * Assignment 2
  * Group 26
- * Aaron Jumarang,  Wallace Lee, John Matti, Aric Quan
+ * Aaron Jumarang, Wallace Lee, John Matti, Aric Quan
 */
 #include <iostream>
 #include <stack>
