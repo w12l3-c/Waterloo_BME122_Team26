@@ -147,7 +147,7 @@ bool comparePlacement(){
 
 void nQueen(int num){
     stack<queen> placement; // store the placement of the queens only for column as each row should have 1 queen
-    stack<stack<queen>> solutions;
+    stack<int> solutions;
     int** board = new int* [num];
     board = createboard(board, num);
     int counter = 1;
@@ -160,7 +160,7 @@ void nQueen(int num){
             cout << "No solutions" << endl;
         }
         else {
-            solutions.push(placement);
+            // solutions.push(placement);
             emptyPlacement(placement);
             cout << endl << "After placing the queens: " << endl;
             printboard(board, num);
